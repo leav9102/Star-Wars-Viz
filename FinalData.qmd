@@ -1,0 +1,33 @@
+---
+title: "FinalData"
+format: pdf
+editor: visual
+---
+
+## Import Dataset
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(readr)
+library(utf8)
+
+# Check the encoding of the CSV file
+file_encoding <- guess_encoding("week7_starwars.csv")$encoding
+cat("File Encoding:", file_encoding, "\n")
+
+# Read CSV file and convert strings to UTF-8 encoding
+starwars <- read_csv("week7_starwars.csv", locale = locale(encoding = file_encoding)) %>%
+  mutate(across(where(is.character), utf8_encode))
+
+# Use skim on the dataframe
+skim(starwars)
+```
+
+I don't think pivoting is super necessary, since every row is a separate person who responded.
+
+The variable types in each column seem to be good. Most are char.
+
+I need to remove some NAs using R code.
+
+Fixing column names are necessary because they are full questions with spaces, so I need to shorten them and remove spaces.
